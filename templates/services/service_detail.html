@@ -1,0 +1,132 @@
+<!-- templates/services/service_detail.html -->
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}{{ service.name }} | {{ site_name }}{% endblock %}
+{% block meta_description %}{{ service.short_description }}{% endblock %}
+
+{% block ogp %}
+<meta property="og:title" content="{% block meta_title %}{% endblock %}" />
+<meta property="og:image" content="{% block meta_image %}{% endblock %}" />
+<meta property="og:image:width" content="{% block meta_width %}{% endblock %}" />
+<meta property="og:image:height" content="{% block meta_height %}{% endblock %}" />
+<meta property="og:url" content="{% block meta_url %}{% endblock %}" />
+<meta property="og:site_name" content="{% block meta_site_name %}{% endblock %}" />
+<meta property="og:description" content="{% block meta_og_description %}{% endblock %}" />    
+{% endblock ogp %}
+
+{% block content %}
+    <!-- Page Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">{{ service.name }}</h1>
+            <p class="text-xl max-w-2xl mx-auto">{{ service.short_description }}</p>
+        </div>
+    </div>
+
+    <!-- Service Content -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="md:col-span-2">
+                {% if service.image %}
+                    <img src="{{ service.image.url }}" alt="{{ service.name }}" class="rounded-lg shadow-lg w-full h-auto object-cover mb-8">
+                {% endif %}
+                
+                <div class="prose max-w-none">
+                    {{ service.description|safe }}
+                </div>
+                
+                <!-- Service Features -->
+                {% if service.features.exists %}
+                    <div class="mt-12">
+                        <h2 class="text-2xl font-bold mb-6">Key Features</h2>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            {% for feature in service.features.all %}
+                                <div class="bg-white p-6 rounded-lg shadow border border-gray-100 hover:shadow-lg transition duration-300">
+                                    <h3 class="text-xl font-bold mb-3">{{ feature.title }}</h3>
+                                    <p class="text-gray-600">{{ feature.description }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Call to Action -->
+                <div class="mt-12 bg-gray-50 rounded-lg p-8 text-center">
+                    <h2 class="text-2xl font-bold mb-4">Ready to get started?</h2>
+                    <p class="text-gray-600 mb-6">Contact us today to discuss how our {{ service.name }} service can help your business.</p>
+                    <a href="{% url 'contact:contact_form' %}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="md:col-span-1">
+                <div class="bg-gray-50 rounded-lg p-6 sticky top-24">
+                    <h3 class="text-xl font-bold mb-4">Other Services</h3>
+                    <ul class="space-y-4">
+                        {% for other_service in service.get_queryset %}
+                            {% if other_service != service %}
+                                <li>
+                                    <a href="{{ other_service.get_absolute_url }}" class="flex items-center p-3 rounded-lg hover:bg-gray-100 transition duration-300">
+                                        {% if other_service.icon %}
+                                            <i class="fas {{ other_service.icon }} text-blue-600 mr-3"></i>
+                                        {% endif %}
+                                        <span>{{ other_service.name }}</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <h3 class="text-xl font-bold mb-4">Need Help?</h3>
+                        <p class="text-gray-600 mb-4">Have questions about our services or want to learn more?</p>
+                        <a href="{% url 'contact:contact_form' %}" class="inline-block bg-white border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-2 px-4 rounded-lg transition duration-300 w-full text-center">
+                            Get in Touch
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Related Services -->
+    {% with related_services=service.get_queryset|slice:":3" %}
+        {% if related_services|length > 1 %}
+            <div class="bg-gray-50 py-16">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl font-bold mb-10 text-center">Explore Our Other Services</h2>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        {% for related in related_services %}
+                            {% if related != service %}
+                                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                                    {% if related.image %}
+                                        <img src="{{ related.image.url }}" alt="{{ related.name }}" class="w-full h-48 object-cover">
+                                    {% else %}
+                                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                                            {% if related.icon %}
+                                                <i class="fas {{ related.icon }} text-gray-400 text-4xl"></i>
+                                            {% else %}
+                                                <span class="text-gray-400">No image</span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-bold mb-2">{{ related.name }}</h3>
+                                        <p class="text-gray-600 mb-4">{{ related.short_description }}</p>
+                                        <a href="{{ related.get_absolute_url }}" class="text-blue-600 hover:text-blue-800 font-medium">
+                                            Learn more →
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endblock %}

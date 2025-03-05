@@ -1,0 +1,50 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Message Sent | {{ site_name }}{% endblock %}
+{% block meta_description %}Thank you for contacting us. Your message has been received.{% endblock %}
+
+{% block ogp %}
+<meta property="og:title" content="Contact Me | aslanyrahim" />
+<meta property="og:image" content="https://aslanyrahim.com/" />
+<meta property="og:image:width" content="1800" />
+<meta property="og:image:height" content="600" />
+<meta property="og:url" content="https://aslanyrahim.com/contact/" />
+<meta property="og:site_name" content="aslanyrahim" />
+<meta property="og:description" content="Thank you for contacting us. Your message has been received." />    
+{% endblock ogp %}
+
+{% block content %}
+    <!-- Page Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">Thank You!</h1>
+            <p class="text-xl max-w-2xl mx-auto">Your message has been successfully sent. We appreciate you reaching out to us.</p>
+        </div>
+    </div>
+    
+    <!-- Success Content -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="bg-white rounded-lg shadow-lg p-8 max-w-2xl mx-auto text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-green-100 p-3 rounded-full">
+                    <svg class="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+            </div>
+            
+            <h2 class="text-2xl font-bold mb-4">Message Received</h2>
+            <p class="text-gray-600 mb-6">Thank you for contacting us. A member of our team will review your message and get back to you as soon as possible.</p>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="{% url 'contact:contact_form' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">
+                    Send Another Message
+                </a>
+                <a href="{% url 'main:home' %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded">
+                    Return to Home
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

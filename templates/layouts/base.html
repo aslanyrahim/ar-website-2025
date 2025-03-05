@@ -1,0 +1,72 @@
+<!-- templates/layouts/base.html -->
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        {% block meta %}
+        <meta name="description" content="{% block meta_description %}{% endblock %}">
+        <meta name="keywords" content="{% block meta_keywords %}aslany rahim, python developer, django developer, software engineer, web developer, personal website, portfolio, about me, skills, projects, n8n automation, integrations, resume, contact, REST API, PostgreSQL, Docker, AWS, Git, CI/CD, testing, agile development{% endblock %}">
+        {% endblock meta %}
+
+        
+        {% block ogp %}
+        <meta property="og:title" content="" />
+        <meta property="og:image" content="" />
+        <meta property="og:image:width" content="" />
+        <meta property="og:image:height" content="" />
+        <meta property="og:url" content="" />
+        <meta property="og:site_name" content="" />
+        <meta property="og:description" content="" />    
+        {% endblock ogp %}
+            
+        
+        <title>{% block title %}{% endblock title %} | aslanyrahim</title>
+
+        {% tailwind_css %}
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        
+        {% block extra_css %}{% endblock extra_css %}
+    </head>
+    <body class="bg-gray-50 flex flex-col min-h-screen">
+        <!-- Header -->
+        {% include 'layouts/navbar.html' %}
+        
+        <!-- Main Content -->
+        <main class="flex-grow">
+            {% block content %}{% endblock content %}
+
+            <!-- Chatbot Icon -->
+            <button id="chatbot-button" class="fixed bottom-6 right-6 bg-blue-500 hover:bg-blue-700 text-white rounded-full shadow-lg p-4 transition-transform duration-200 transform hover:scale-110">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10v-3m0 0l4-1m-4 1l4 1.5m-4 3.5V7m-6 4h12a2 2 0 012 2v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5a2 2 0 012-2z" />
+                </svg>
+            </button>
+        </main>
+        
+        <!-- Footer -->
+        {% include 'layouts/footer.html' %}
+        
+        <!-- JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-button').addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            });
+        </script>
+        <script>
+            document.getElementById('chatbot-button').addEventListener('click', function() {
+                // Replace this with your actual chatbot integration code.
+                alert('Chatbot functionality will be integrated here!');
+                // You would typically open a modal or redirect to a chatbot interface.
+            });
+        </script>
+        
+        {% block extra_js %}{% endblock extra_js %}
+    </body>
+</html>

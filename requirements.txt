@@ -1,0 +1,10 @@
+django
+django-tailwind[reload]
+django-summernote
+django-storages
+boto3
+python-decouple
+pillow
+django-crispy-forms
+crispy-tailwind
+django-allauth

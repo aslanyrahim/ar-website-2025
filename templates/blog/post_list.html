@@ -1,0 +1,117 @@
+<!-- templates/blog/post_list.html -->
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Blog{% endblock %}
+{% block meta_description %}Stay updated on the latest insights and trends in automation software, web development, and server management. Explore articles on Django, Python, n8n, and more, written by a seasoned software engineer.{% endblock %}
+
+{% block ogp %}
+<meta property="og:title" content="Blog | aslanyrahim" />
+<meta property="og:image" content="https://aslanyrahim.com{{ post.featured_image.url }}" />
+<meta property="og:image:width" content="1800" />
+<meta property="og:image:height" content="600" />
+<meta property="og:url" content="https://aslanyrahim.com/blog/" />
+<meta property="og:site_name" content="aslanyrahim" />
+<meta property="og:description" content="Stay updated on the latest insights and trends in automation software, web development, and server management. Explore articles on Django, Python, n8n, and more, written by a seasoned software engineer." />      
+{% endblock ogp %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">Blog</h1>
+            <p class="text-xl max-w-2xl mx-auto">Exploring web development, software engineering, and server administration with Python, Django, and automation tools.</p>
+        </div>
+    </section>
+    
+    <!-- Blog Content -->
+    <section class="container mx-auto px-4 py-12">
+        <div class="flex flex-col lg:flex-row">
+            <!-- Blog Posts -->
+            <div class="w-full lg:w-3/4 lg:pr-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {% for post in posts %}
+                    <article class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                        {% if post.featured_image %}
+                        <figure>
+                            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-60 object-cover">
+                        </figure>
+                        {% else %}
+                        <div class="w-full h-60 bg-gray-200 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        {% endif %}
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <span>{{ post.published_at|date:"F d, Y" }}</span>
+                                <span class="mx-2">•</span>
+                                <span>{{ post.category.name }}</span>
+                            </div>
+                            <h2 class="text-xl font-bold mb-2">{{ post.title }}</h2>
+                            <p class="text-gray-600 mb-4">{{ post.excerpt|truncatewords:20 }}</p>
+                            <a href="{{ post.get_absolute_url }}" class="text-blue-600 hover:text-blue-800 font-medium">Read More &rarr;</a>
+                        </div>
+                    </article>
+                    {% empty %}
+                    <div class="col-span-2 text-center py-8 bg-white rounded-lg shadow p-6">
+                        <p>No blog posts available at the moment.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Pagination -->
+                {% if is_paginated %}
+                <div class="mt-10 flex justify-center">
+                    <div class="inline-flex rounded-md shadow">
+                        {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}" class="bg-white text-gray-700 hover:bg-gray-50 py-2 px-4 rounded-l-md">Previous</a>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <span class="bg-blue-600 text-white py-2 px-4">{{ num }}</span>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <a href="?page={{ num }}" class="bg-white text-gray-700 hover:bg-gray-50 py-2 px-4">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="bg-white text-gray-700 hover:bg-gray-50 py-2 px-4 rounded-r-md">Next</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="w-full lg:w-1/4 mt-8 lg:mt-0">
+                <!-- Categories and Tags -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-4">Categories</h3>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        {% for category in categories %}
+                        <a href="{{ category.get_absolute_url }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">
+                            {{ category.name }}
+                        </a>
+                        {% empty %}
+                        <p>No categories available</p>
+                        {% endfor %}
+                    </div>
+                    
+                    <h3 class="text-xl font-bold mb-4">Tags</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% for tag in tags %}
+                        <a href="{{ tag.get_absolute_url }}" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-full text-sm">
+                            {{ tag.name }}
+                        </a>
+                        {% empty %}
+                        <p>No tags available</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

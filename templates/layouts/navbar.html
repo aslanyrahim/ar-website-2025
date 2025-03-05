@@ -1,0 +1,37 @@
+{% load static %}
+<header class="bg-white shadow-md">
+	<div class="container mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+            <a href="{% url 'main:home' %}" class="text-2xl font-bold text-blue-600">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-10">
+            </a>
+            
+            <!-- Mobile Menu Button -->
+            <button type="button" class="md:hidden focus:outline-none" id="mobile-menu-button">
+                <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="{% url 'main:home' %}" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                <a href="{% url 'main:about' %}" class="text-gray-700 hover:text-blue-600 font-medium">About</a>
+                <a href="{% url 'projects:project_list' %}" class="text-gray-700 hover:text-blue-600 font-medium">Projects</a>
+                <a href="{% url 'blog:post_list' %}" class="text-gray-700 hover:text-blue-600 font-medium">Blog</a>
+                <a href="{% url 'contact:contact_form' %}" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+            </nav>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="flex flex-col space-y-4 mt-4 pb-3">
+                <a href="{% url 'main:home' %}" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                <a href="{% url 'main:about' %}" class="text-gray-700 hover:text-blue-600 font-medium">About</a>
+                <a href="{% url 'projects:project_list' %}" class="text-gray-700 hover:text-blue-600 font-medium">Projects</a>
+                <a href="{% url 'blog:post_list' %}" class="text-gray-700 hover:text-blue-600 font-medium">Blog</a>
+                <a href="{% url 'contact:contact_form' %}" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+            </div>
+        </div>
+	</div>
+</header>

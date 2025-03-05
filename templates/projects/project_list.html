@@ -1,0 +1,64 @@
+<!-- templates/project/project_list.html -->
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Projects{% endblock %}
+{% block meta_description %}Discover a portfolio of innovative projects showcasing expertise in Django, Python, and n8n automation. Explore how I leverage technology to deliver efficient solutions for web development and workflow automation.{% endblock %}
+
+{% block ogp %}
+<meta property="og:title" content="Projects | aslanyrahim" />
+<meta property="og:image" content="https://aslanyrahim.com{{ project.image.url }}" />
+<meta property="og:image:width" content="1800" />
+<meta property="og:image:height" content="600" />
+<meta property="og:url" content="https://aslanyrahim.com/projects/" />
+<meta property="og:site_name" content="aslanyrahim" />
+<meta property="og:description" content="Discover a portfolio of innovative projects showcasing expertise in Django, Python, and n8n automation. Explore how I leverage technology to deliver efficient solutions for web development and workflow automation." />      
+{% endblock ogp %}
+
+{% block content %}
+    <!-- Page Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">Our Projects</h1>
+            <p class="text-xl max-w-2xl mx-auto">Explore our professional projects including website design, business automation, and server maintenance.</p>
+        </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="container mx-auto px-4 py-16">
+        {% if projects %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for project in projects %}
+                    <div class="project-card bg-white rounded-lg shadow-md overflow-hidden">
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.name }}" class="w-full h-48 object-cover">
+                        {% else %}
+                            <div class="bg-gray-200 h-48 flex items-center justify-center">
+                                {% if project.icon %}
+                                    <i class="fas {{ project.icon }} text-gray-400 text-5xl"></i>
+                                {% else %}
+                                    <span class="text-gray-400 text-xl">No image available</span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <div class="p-6">
+                            <h2 class="text-2xl font-bold mb-2">{{ project.name }}</h2>
+                            <p class="text-gray-600 mb-4">{{ project.short_description }}</p>
+                            <div class="prose max-w-none mb-4">
+                                {{ project.description|safe|truncatewords:30 }}
+                            </div>
+                            <a href="{{ project.get_absolute_url }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition duration-300">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-16">
+                <h2 class="text-2xl font-semibold text-gray-600">No projects available at the moment.</h2>
+                <p class="mt-4 text-gray-500">Please check back later for updates.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

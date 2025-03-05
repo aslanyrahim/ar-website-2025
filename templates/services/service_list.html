@@ -1,0 +1,102 @@
+<!-- templates/services/service_list.html -->
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Services | {{ site_name }}{% endblock %}
+{% block meta_description %}Explore our professional services including website design, business automation, and server maintenance.{% endblock %}
+
+{% block ogp %}
+<meta property="og:title" content="{% block meta_title %}{% endblock %}" />
+<meta property="og:image" content="{% block meta_image %}{% endblock %}" />
+<meta property="og:image:width" content="{% block meta_width %}{% endblock %}" />
+<meta property="og:image:height" content="{% block meta_height %}{% endblock %}" />
+<meta property="og:url" content="{% block meta_url %}{% endblock %}" />
+<meta property="og:site_name" content="{% block meta_site_name %}{% endblock %}" />
+<meta property="og:description" content="{% block meta_og_description %}{% endblock %}" />    
+{% endblock ogp %}
+
+{% block content %}
+    <!-- Page Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">Our Services</h1>
+            <p class="text-xl max-w-2xl mx-auto">Explore our professional services including website design, business automation, and server maintenance.</p>
+        </div>
+    </div>
+
+    <!-- Services List -->
+    <div class="container mx-auto px-4 py-16">
+        {% if services %}
+            <div class="space-y-24">
+                {% for service in services %}
+                    <div class="service-card">
+                        {% if forloop.counter|divisibleby:2 %}
+                            <!-- Even numbered service (image on right) -->
+                            <div class="grid md:grid-cols-2 gap-8 items-center">
+                                <div class="service-content order-2 md:order-1">
+                                    <h2 class="text-3xl font-bold mb-4">{{ service.name }}</h2>
+                                    <p class="text-gray-600 mb-6">{{ service.short_description }}</p>
+                                    <div class="prose max-w-none mb-6">
+                                        {{ service.description|safe|truncatewords:50 }}
+                                    </div>
+                                    <div class="mt-4">
+                                        <a href="{{ service.get_absolute_url }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-300">
+                                            Learn More
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="service-image order-1 md:order-2">
+                                    {% if service.image %}
+                                        <img src="{{ service.image.url }}" alt="{{ service.name }}" class="rounded-lg shadow-lg w-full h-auto object-cover aspect-video">
+                                    {% else %}
+                                        <div class="bg-gray-200 rounded-lg flex items-center justify-center h-64">
+                                            {% if service.icon %}
+                                                <i class="fas {{ service.icon }} text-gray-400 text-5xl"></i>
+                                            {% else %}
+                                                <span class="text-gray-400 text-xl">No image available</span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% else %}
+                            <!-- Odd numbered service (image on left) -->
+                            <div class="grid md:grid-cols-2 gap-8 items-center">
+                                <div class="service-image">
+                                    {% if service.image %}
+                                        <img src="{{ service.image.url }}" alt="{{ service.name }}" class="rounded-lg shadow-lg w-full h-auto object-cover aspect-video">
+                                    {% else %}
+                                        <div class="bg-gray-200 rounded-lg flex items-center justify-center h-64">
+                                            {% if service.icon %}
+                                                <i class="fas {{ service.icon }} text-gray-400 text-5xl"></i>
+                                            {% else %}
+                                                <span class="text-gray-400 text-xl">No image available</span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="service-content">
+                                    <h2 class="text-3xl font-bold mb-4">{{ service.name }}</h2>
+                                    <p class="text-gray-600 mb-6">{{ service.short_description }}</p>
+                                    <div class="prose max-w-none mb-6">
+                                        {{ service.description|safe|truncatewords:50 }}
+                                    </div>
+                                    <div class="mt-4">
+                                        <a href="{{ service.get_absolute_url }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-300">
+                                            Learn More
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-16">
+                <h2 class="text-2xl font-semibold text-gray-600">No services available at the moment.</h2>
+                <p class="mt-4 text-gray-500">Please check back later for updates.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

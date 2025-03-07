@@ -8,3 +8,4 @@ pillow
 django-crispy-forms
 crispy-tailwind
 django-allauth
+gunicorn

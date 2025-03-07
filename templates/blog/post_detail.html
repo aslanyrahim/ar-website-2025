@@ -7,7 +7,7 @@
 
 {% block ogp %}
 <meta property="og:title" content="{{ post.seo_title|default:post.title }} | aslanyrahim" />
-<meta property="og:image" content="https://aslanyrahim.com{{ post.featured_image.url }}" />
+<meta property="og:image" content="{{ post.featured_image.url }}" />
 <meta property="og:image:width" content="1800" />
 <meta property="og:image:height" content="600" />
 <meta property="og:url" content="https://aslanyrahim.com{{ post.get_absolute_url }}" />

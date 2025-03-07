@@ -5,19 +5,25 @@
 							<h3 class="text-xl font-bold mb-4">About Me</h3>
 							<p class="mb-4">I'm a software engineer specializing in Python and Django, with a passion for automation and creating efficient web solutions.</p>
 							<div class="flex space-x-4">
-									<a href="#" class="text-white hover:text-blue-400"><i class="fab fa-github"></i></a>
-									<a href="#" class="text-white hover:text-blue-400"><i class="fab fa-linkedin-in"></i></a>
-									<a href="#" class="text-white hover:text-blue-400"><i class="fab fa-twitter"></i></a>
-									<a href="#" class="text-white hover:text-blue-400"><i class="fab fa-dev"></i></a>
+									<a href="https://github.com/aslanyrahim" class="text-white hover:text-blue-400"><i class="fab fa-github"></i></a>
+									<a href="https://www.linkedin.com/in/aslanyrahim/" class="text-white hover:text-blue-400"><i class="fab fa-linkedin-in"></i></a>
+									<a href="https://x.com/AslanyRahim" class="text-white hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+									{% comment %} <a href="#" class="text-white hover:text-blue-400"><i class="fab fa-dev"></i></a> {% endcomment %}
 							</div>
 					</div>
 					<div>
 							<h3 class="text-xl font-bold mb-4">Latest Blog Posts</h3>
 							<ul class="space-y-2">
 									<!-- You can dynamically populate this list with your latest blog posts -->
+									{% if posts %}
+										{% for post in post %}
+										<li><a href="{{ post.get_absolute_url }}" class="text-gray-300 hover:text-white">{{ post.title }}</a></li>
+										{% endfor %}
+									{% comment %} {% else %}
 									<li><a href="#" class="text-gray-300 hover:text-white">Automating Workflows with n8n</a></li>
 									<li><a href="#" class="text-gray-300 hover:text-white">Django Best Practices in 2025</a></li>
-									<li><a href="#" class="text-gray-300 hover:text-white">Integrating AI in Web Development</a></li>
+									<li><a href="#" class="text-gray-300 hover:text-white">Integrating AI in Web Development</a></li> {% endcomment %}
+									{% endif %}
 							</ul>
 					</div>
 					<div>
@@ -25,11 +31,11 @@
 							<ul class="space-y-2">
 									<li class="flex items-center">
 											<i class="fas fa-envelope mr-3"></i>
-											<span>your.email@example.com</span>
+											<span>aslany.rahim@gmail.com</span>
 									</li>
 									<li class="flex items-center">
 											<i class="fas fa-map-marker-alt mr-3"></i>
-											<span>Your City, Country</span>
+											<span>Canberra, Singapore</span>
 									</li>
 									<li>
 											<a href="{% url 'contact:contact_form' %}" class="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">Contact Me</a>
@@ -38,7 +44,7 @@
 					</div>
 			</div>
 			<div class="border-t border-gray-700 mt-8 pt-6 text-center">
-					<p>&copy; {% now "Y" %} Your Name. All rights reserved.</p>
+					<p>&copy; {% now "Y" %} Aslany Rahim. All rights reserved.</p>
 			</div>
 	</div>
 </footer>

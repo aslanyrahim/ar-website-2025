@@ -28,8 +28,10 @@ class ContactFormView(FormView):
         Message:
         {contact.message}
         """
-        from_email = settings.DEFAULT_FROM_EMAIL
-        recipient_list = [settings.DEFAULT_FROM_EMAIL]
+        # from_email = settings.DEFAULT_FROM_EMAIL
+        # recipient_list = [settings.DEFAULT_FROM_EMAIL]
+        from_email = contact.email
+        recipient_list = [settings.EMAIL_HOST_USER]
         
         try:
             send_mail(subject, message, from_email, recipient_list)
